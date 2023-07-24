@@ -1,6 +1,9 @@
 const secuenciaMaquina = [];
 let retrasoMaquina = 0;
 
+const secuenciaUsuario = [];
+let retrasoUsuario = 0;
+
 const $botonJugar = document.querySelector("#boton-jugar");
 $botonJugar.onclick = comenzarJuego;
 
@@ -28,4 +31,23 @@ function iluminarCuadro($cuadro) {
     setTimeout(() => {
         $cuadro.style.opacity = 1;
     }, 500);
+}
+
+function habilitarInputUsuario() {
+    const $cuadros = document.querySelectorAll(".cuadro");
+
+    $cuadros.forEach($cuadro => {
+        $cuadro.addEventListener("click", manejarInputUsuario);
+    });
+}
+
+function manejarInputUsuario(e) {
+    const $cuadroUsuario = e.target;
+    secuenciaUsuario.push($cuadroUsuario);
+
+    setTimeout(() => {
+        iluminarCuadro($cuadroUsuario);
+    }, retrasoUsuario);
+
+    retrasoUsuario += 1000;
 }
