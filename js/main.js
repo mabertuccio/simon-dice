@@ -1,5 +1,5 @@
 const secuenciaMaquina = [];
-let retrasoMaquina = 0;
+let retrasoMaquina = 1000;
 
 const secuenciaUsuario = [];
 let retrasoUsuario = 0;
@@ -8,7 +8,12 @@ const $botonJugar = document.querySelector("#boton-jugar");
 $botonJugar.onclick = comenzarJuego;
 
 function comenzarJuego() {
-    console.log("Funciona");
+    secuenciaMaquina.length = 0;
+    secuenciaUsuario.length = 0;
+    retrasoMaquina = 1000;
+    retrasoUsuario = 0;
+    
+    turnoMaquina();
 }
 
 function turnoMaquina() {
@@ -19,10 +24,14 @@ function turnoMaquina() {
     for (let i = 0; i < secuenciaMaquina.length; i++) {
         setTimeout(() => {
             iluminarCuadro(secuenciaMaquina[i]);
-        }, retrasoMaquina);
+        }, retrasoMaquina + i * 1000);
 
-        retrasoMaquina += 1000;
+        
     }
+
+    setTimeout(() => {
+        habilitarInputUsuario();
+    }, retrasoMaquina + secuenciaMaquina.length * 500);
 }
 
 function iluminarCuadro($cuadro) {
@@ -45,9 +54,16 @@ function manejarInputUsuario(e) {
     const $cuadroUsuario = e.target;
     secuenciaUsuario.push($cuadroUsuario);
 
-    setTimeout(() => {
-        iluminarCuadro($cuadroUsuario);
-    }, retrasoUsuario);
+    iluminarCuadro($cuadroUsuario);
 
-    retrasoUsuario += 1000;
+    const indice = secuenciaUsuario.length - 1;
+    if (secuenciaUsuario[indice] !== secuenciaMaquina[indice]) {
+        alert("Perdiste!");
+    } else {
+        if (secuenciaUsuario.length === secuenciaMaquina.length) {
+            retrasoUsuario = 0;
+            secuenciaUsuario.length = 0;
+            turnoMaquina();
+        }
+    }
 }
