@@ -17,6 +17,8 @@ function comenzarJuego() {
 }
 
 function turnoMaquina() {
+    deshabilitarInputUsuario();
+
     const $cuadros = document.querySelectorAll(".cuadro");
     const $cuadroMaquina = $cuadros[Math.floor(Math.random() * $cuadros.length)];
     secuenciaMaquina.push($cuadroMaquina);
@@ -47,6 +49,14 @@ function habilitarInputUsuario() {
 
     $cuadros.forEach($cuadro => {
         $cuadro.addEventListener("click", manejarInputUsuario);
+    });
+}
+
+function deshabilitarInputUsuario() {
+    const $cuadros = document.querySelectorAll(".cuadro");
+
+    $cuadros.forEach($cuadro => {
+        $cuadro.removeEventListener("click", manejarInputUsuario);
     });
 }
 
