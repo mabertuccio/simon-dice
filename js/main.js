@@ -1,7 +1,7 @@
-const secuenciaMaquina = [];
+let secuenciaMaquina = [];
 let retrasoMaquina = 1000;
 
-const secuenciaUsuario = [];
+let secuenciaUsuario = [];
 let retrasoUsuario = 0;
 
 let puntosUsuario = 0;
@@ -72,7 +72,7 @@ function manejarInputUsuario(e) {
 
     const indice = secuenciaUsuario.length - 1;
     if (secuenciaUsuario[indice] !== secuenciaMaquina[indice]) {
-        alert("Perdiste!");
+        perderJuego();
     } else {
         if (secuenciaUsuario.length === secuenciaMaquina.length) {
             retrasoUsuario = 0;
@@ -82,6 +82,16 @@ function manejarInputUsuario(e) {
             turnoMaquina();
         }
     }
+}
+
+function perderJuego() {
+    puntosUsuario = 0;
+    secuenciaMaquina = [];
+    secuenciaUsuario = [];
+
+    actualizarTurno("Perdiste!");
+    actualizarPuntosUsuario(puntosUsuario);
+    deshabilitarInputUsuario();
 }
 
 function actualizarPuntosUsuario(puntosUsuario) {
