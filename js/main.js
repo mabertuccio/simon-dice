@@ -4,6 +4,8 @@ let retrasoMaquina = 1000;
 const secuenciaUsuario = [];
 let retrasoUsuario = 0;
 
+let puntosUsuario = 0;
+
 const $botonJugar = document.querySelector("#boton-jugar");
 $botonJugar.onclick = comenzarJuego;
 
@@ -17,6 +19,7 @@ function comenzarJuego() {
 }
 
 function turnoMaquina() {
+    actualizarTurno("Maquina");
     deshabilitarInputUsuario();
 
     const $cuadros = document.querySelectorAll(".cuadro");
@@ -33,6 +36,7 @@ function turnoMaquina() {
 
     setTimeout(() => {
         habilitarInputUsuario();
+        actualizarTurno("Usuario");
     }, retrasoMaquina + secuenciaMaquina.length * 500);
 }
 
@@ -73,7 +77,17 @@ function manejarInputUsuario(e) {
         if (secuenciaUsuario.length === secuenciaMaquina.length) {
             retrasoUsuario = 0;
             secuenciaUsuario.length = 0;
+            puntosUsuario++;
+            actualizarPuntosUsuario(puntosUsuario);
             turnoMaquina();
         }
     }
+}
+
+function actualizarPuntosUsuario(puntosUsuario) {
+    document.querySelector("#puntos").innerText = `${puntosUsuario}`;
+}
+
+function actualizarTurno(tipoJugador) {
+    document.querySelector("#turno").innerText = `${tipoJugador}`;
 }
